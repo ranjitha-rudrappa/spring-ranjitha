@@ -1,5 +1,7 @@
 package com.bt.ms.im.controller;
 
+import org.eclipse.jetty.util.log.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bt.ms.im.config.AppConstants;
 import com.bt.ms.im.entity.BaseResponse;
+import com.bt.ms.im.entity.BtWifiEligibilityResponse;
 import com.bt.ms.im.entity.GetRequest;
 import com.bt.ms.im.entity.GetResponse;
 import com.bt.ms.im.entity.ResponseBean;
@@ -31,24 +34,25 @@ public class BtWifiController {
 
 	@Autowired
 	AppConstants appConstants;
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BtWifiController.class);
 	
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping( produces = { "application/json" })
-	public ResponseEntity<GetResponse> getCustomerOtp(
+	public ResponseEntity<BtWifiEligibilityResponse> getCustomerOtp(
 			@RequestHeader(value = "APIGW-Tracking-Header", required = true) String apigwTrackingHeader,
-			@RequestHeader(value = "X-Profile-Guid ", required = false) String uuid,
-			@RequestHeader(value = "-Consumer-DigitalId-Ref", required = false) String consumerId) {
+			@RequestHeader(value = "X-Profile-Guid", required = false) String xProfileGuid,
+			@RequestHeader(value = "X-Consumer-DigitalId-Ref", required = false) String xConsumerDigitalIdRef) {
 
 		GetRequest getrequest = new GetRequest();
-		
+		logger.info("This is an informational message.");
 		getrequest.setTrackingHeader(apigwTrackingHeader);
-		getrequest.setUuid(uuid);
-		getrequest.setConsumeridref(consumerId);
-
+		getrequest.setUuid(xProfileGuid);
+		getrequest.setConsumeridref(xConsumerDigitalIdRef);
+        System.out.println("Request validation");
 		requestValidator.validateGetRequest(getrequest);
-
-		ResponseBean<GetResponse> response = getclientprofileservice.getclientprofile(getrequest);
+		 System.out.println("Sending to service layer");
+		ResponseBean<BtWifiEligibilityResponse> response = getclientprofileservice.getclientprofile(getrequest);
 
 		if (response.isSuccess()) {
 			return new ResponseEntity<>(response.getData(), HttpStatus.OK);
@@ -66,7 +70,7 @@ public class BtWifiController {
 	}
 
 
-	private HttpStatus setErrorCode(ResponseBean<GetResponse> response) {
+	private HttpStatus setErrorCode(ResponseBean<BtWifiEligibilityResponse> response) {
 		return null;
 	}
 

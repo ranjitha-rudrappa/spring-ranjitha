@@ -22,13 +22,13 @@ public class RequestValidator {
 	public void validateGetRequest(GetRequest request) {
 		String trackingid = request.getTrackingHeader();
 		String Uuid = request.getUuid();
-		String consumerIDref = request.getConsumeridref();
+		//String consumerIDref = request.getConsumeridref();
 		
 		
 		
 		if(trackingid == null)
 		{
-//			StandardError errormsg = StandardError.ERR400_25;
+	//		StandardError errormsg = StandardError.ERR400_25;
 //			log.error(errormsg.getMessage());
 //			throw new BadRequestException(errormsg);
 		}

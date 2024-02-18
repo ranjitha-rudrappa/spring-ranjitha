@@ -11,8 +11,8 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @Configuration
-@PropertySource("classpath:constants.properties")
-@PropertySource(value = "file:./config/constants.properties", ignoreResourceNotFound=true)
+//@PropertySource("classpath:constants.properties")
+//@PropertySource(value = "file:./config/constants.properties", ignoreResourceNotFound=true)
 @ConfigurationProperties(prefix = "app")
 public class AppConstants {
 
@@ -70,6 +70,16 @@ public class AppConstants {
 
 		public void setTempUnavMessage(String tempUnavMessage) {
 			this.tempUnavMessage = tempUnavMessage;
+		}
+
+		public String getForbiddenUserCode() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public String getForbiddenUserMessage() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}
