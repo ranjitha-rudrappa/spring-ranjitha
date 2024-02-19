@@ -19,6 +19,7 @@ import com.bt.ms.im.entity.GetRequest;
 import com.bt.ms.im.entity.GetResponse;
 import com.bt.ms.im.entity.ResponseBean;
 import com.bt.ms.im.service.GetClientProfileServiceImpl;
+import com.bt.ms.im.service.GetClientProfileV1Res;
 import com.bt.ms.im.util.RequestValidator;
 
 @RestController
@@ -49,30 +50,53 @@ public class BtWifiController {
 		getrequest.setTrackingHeader(apigwTrackingHeader);
 		getrequest.setUuid(xProfileGuid);
 		getrequest.setConsumeridref(xConsumerDigitalIdRef);
-        System.out.println("Request validation");
+		
+		logger.info("Sending for Request validation");
 		requestValidator.validateGetRequest(getrequest);
-		 System.out.println("Sending to service layer");
+		
+		logger.info("Sending to service layer");
 		ResponseBean<BtWifiEligibilityResponse> response = getclientprofileservice.getclientprofile(getrequest);
-
-		if (response.isSuccess()) {
-			return new ResponseEntity<>(response.getData(), HttpStatus.OK);
-		}
-
-		else {
-			BaseResponse errorres = new BaseResponse();
-			errorres.setCode(response.getCode());
-			errorres.setMessage(response.getMessage());
-			errorres.setRootException(response.getRootExceptions());
-			HttpStatus status = setErrorCode(response);
-
-			return new ResponseEntity(errorres, status);
-		}
+	return new ResponseEntity<>(response.getData(), HttpStatus.OK);
 	}
-
-
-	private HttpStatus setErrorCode(ResponseBean<BtWifiEligibilityResponse> response) {
-		return null;
-	}
-
-
 }
+//		if (response.isSuccess()) {
+//			return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+//		}
+//
+//		else {
+//			BaseResponse errorres = new BaseResponse();
+//			errorres.setCode(response.getCode());
+//			errorres.setMessage(response.getMessage());
+//			errorres.setRootException(response.getRootExceptions());
+//			HttpStatus status = setErrorCode(response);
+//
+//			return new ResponseEntity(errorres, status);
+//		}
+//	}
+//
+//
+//	private HttpStatus setErrorCode(ResponseBean<BtWifiEligibilityResponse> response) {
+//	    String errorCode = response.getCode();
+//
+//	    switch (errorCode) {
+//	        case YourErrorCodeConstants.BAD_REQUEST_CODE:
+//	            return HttpStatus.BAD_REQUEST;
+//
+//	        // Add more cases for other error codes as needed
+//
+//	        default:
+//	            return HttpStatus.INTERNAL_SERVER_ERROR;
+//	    }
+//	}
+//
+//	public class YourErrorCodeConstants {
+//	    public static final String BAD_REQUEST_CODE = "400" ;
+//	    public static final int INTERNAL_SERVER_ERROR_CODE = 500;
+//	    // Add more error codes as needed
+//	}
+
+
+		
+
+
+

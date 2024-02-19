@@ -12,7 +12,7 @@ public class Client {
     private String status;
     private ContactDetails contactDetails;
     private String organisation;
-    private List<Characteristic> characteristics;
+    private Characteristic characteristics;
 	public List<ClientIdentity> getClientIdentities() {
 		return clientIdentities;
 	}
@@ -43,11 +43,11 @@ public class Client {
 	public void setOrganisation(String organisation) {
 		this.organisation = organisation;
 	}
-	public List<Characteristic> getCharacteristics() {
+	public Characteristic getCharacteristics() {
 		return characteristics;
 	}
-	public void setCharacteristics(List<Characteristic> characteristics) {
-		this.characteristics = characteristics;
+	public void setCharacteristics(Characteristic characteristic) {
+		this.characteristics = characteristic;
 	}
 
     

@@ -11,6 +11,7 @@ public class BtWifiEligibilityResponse {
 
 		private String uuid;
 		private String csfid;
+		
 		public String getUuid() {
 			return uuid;
 		}
@@ -21,6 +22,11 @@ public class BtWifiEligibilityResponse {
 			return csfid;
 		}
 		public void setCsfid(String csfid) {
+			this.csfid = csfid;
+		}
+		public BtWifiEligibilityResponse(String uuid, String csfid) {
+			super();
+			this.uuid = uuid;
 			this.csfid = csfid;
 		}
 		

@@ -6,8 +6,8 @@ public class ClientServiceInstanceV1 {
 	 private String serviceCode;
 	    private String key;
 	    private String status;
-	    private List<Characteristic> characteristics;
-	    private List<ServiceRole> serviceRoles;
+	    private Characteristic characteristics;
+	    private ServiceRole serviceRoles;
 	    private ServiceIdentity serviceIdentity;
 		public String getServiceCode() {
 			return serviceCode;
@@ -27,17 +27,17 @@ public class ClientServiceInstanceV1 {
 		public void setStatus(String status) {
 			this.status = status;
 		}
-		public List<Characteristic> getCharacteristics() {
+		public Characteristic getCharacteristics() {
 			return characteristics;
 		}
-		public void setCharacteristics(List<Characteristic> characteristics) {
-			this.characteristics = characteristics;
+		public void setCharacteristics(Characteristic characteristic) {
+			this.characteristics = characteristic;
 		}
-		public List<ServiceRole> getServiceRoles() {
+		public ServiceRole getServiceRoles() {
 			return serviceRoles;
 		}
-		public void setServiceRoles(List<ServiceRole> serviceRoles) {
-			this.serviceRoles = serviceRoles;
+		public void setServiceRoles(ServiceRole serviceRole) {
+			this.serviceRoles = serviceRole;
 		}
 		public ServiceIdentity getServiceIdentity() {
 			return serviceIdentity;

@@ -182,4 +182,13 @@ public class ResponseBean<T> {
 	public static AppConstants getAppConstant() {
 		return SpringApplicationContextHolder.getBean(AppConstants.class);
 	}
+	@Override
+    public String toString() {
+        return "ResponseBean{" +
+                "data=" + data +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                ", rootExceptions=" + rootExceptions +
+                '}';
+}
 }
