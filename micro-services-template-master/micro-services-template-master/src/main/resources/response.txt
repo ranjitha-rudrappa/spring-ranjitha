@@ -1,0 +1,90 @@
+{
+    "data": {
+        "data": {
+            "clients": [
+                {
+                    "clientIdentities": [
+                        {
+                            "value": "btwifi_t10_active_cit@bt.com",
+                            "domain": "BTCOM",
+                            "status": "ACTIVE",
+                            "clientCredential": {
+                                "type": "SHA256_V1",
+                                "status": "ACTIVE",
+                                "authenticationLevel": 100
+                            }
+                        }
+                    ],
+                    "key": "1a4ca54d-4c89-103b-ba34-cd6c9af53e01",
+                    "status": "ACTIVE",
+                    "contactDetails": {
+                        "title": "Mr",
+                        "firstName": "TEST",
+                        "lastName": "BTWIFI",
+                        "email": "abhinav.chaudhary@bt.com"
+                    },
+                    "organisation": "BTRetailConsumer",
+                    "characteristics": {
+                        "name": "SOME_CHARACTERISTIC",
+                        "value": "SOME_VALUE"
+                    }
+                }
+            ],
+            "clientServiceInstances": [
+                {
+                    "serviceCode": "BTWIFI:DEFAULT",
+                    "key": "1a4cc470-4c89-103b-99a0-a5b85ba73e01",
+                    "status": "ACTIVE",
+                    "characteristics": {
+                        "name": "CFSID",
+                        "value": "SOME_VALUE"
+                    },
+                    "serviceRoles": {
+                        "roleCode": "ADMIN",
+                        "key": "EE0EB50C32143F60E0534752320AA2C2",
+                        "status": "ACTIVE",
+                        "clientIdentity": {
+                            "value": "020297527676",
+                            "domain": "VAS_BILLINGACCOUNT_ID",
+                            "status": "ACTIVE"
+                        }
+                    },
+                    "serviceIdentity": {
+                        "value": "020297527676",
+                        "domain": "VAS_BILLINGACCOUNT_ID"
+                    }
+                },
+                {
+                    "serviceCode": "CONTENTFILTERING:DEFAULT",
+                    "key": "1a4cc470-4c89-103b-99a0-a5b85ba73e01",
+                    "status": "ACTIVE",
+                    "characteristics": {
+                        "name": "CFSID",
+                        "value": "SOME_VALUE"
+                    },
+                    "serviceRoles": {
+                        "roleCode": "ADMIN",
+                        "key": "EE0EB50C32143F60E0534752320AA2C2",
+                        "status": "ACTIVE",
+                        "clientIdentity": {
+                            "value": "020297527676",
+                            "domain": "VAS_BILLINGACCOUNT_ID",
+                            "status": "ACTIVE"
+                        }
+                    },
+                    "serviceIdentity": {
+                        "value": "020297527676",
+                        "domain": "VAS_BILLINGACCOUNT_ID"
+                    }
+                }
+            ]
+        },
+        "status": "SUCCESS",
+        "failed": false,
+        "success": true,
+        "pertialfail": false
+    },
+    "failed": false,
+    "success": false,
+    "pertialfail": false
+}

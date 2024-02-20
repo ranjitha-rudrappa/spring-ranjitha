@@ -1,74 +1,62 @@
 package com.bt.ms.im.controller;
 
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.jupiter.api.Test;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import com.bt.ms.im.config.AppConstants;
 import com.bt.ms.im.entity.BtWifiEligibilityResponse;
 import com.bt.ms.im.entity.GetRequest;
 import com.bt.ms.im.entity.ResponseBean;
 import com.bt.ms.im.service.GetClientProfileServiceImpl;
-import com.bt.ms.im.util.LogUtil;
 import com.bt.ms.im.util.RequestValidator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-//@WebMvcTest(BtWifiController.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 public class BtWifiControllerTest {
 
-//  @Autowired
-//  private MockMvc mockMvc;
-//
-//  @MockBean
-//  private RequestValidator requestValidator;
-//  
-//  @MockBean
-//  private GetClientProfileServiceImpl getclientprofileservice;
-//
-//  @MockBean
-//  private AppConstants appConstants;
-//
-//  @MockBean  
-//  private LogUtil logUtils;
-//
-//  @Test
-//  public void testGetCustomerOtp() throws Exception {
-//
-//    String apigwTrackingHeader = "96bb97fa-b941-46bb-8c4e-86c616c28a13";
-//    
-//    String xProfileGuid = "0ab297cc-b2b6-1033-9f36-9a1c1857c201";
-//    
-//    String xConsumerDigitalIdRef = "sampleXConsumerDigitalIdRef";
-//
-//    GetRequest getRequest = new GetRequest();
-//    
-//    BtWifiEligibilityResponse mockResponse = new BtWifiEligibilityResponse("1a4cc470-4c89-103b-99a0-a5b85ba73e01","SOME_VALUE");
-//    
-//    ResponseBean<BtWifiEligibilityResponse> mockResponseBean = ResponseBean.of(mockResponse);
-//    
-//    when(getclientprofileservice.getclientprofile(getRequest)).thenReturn(mockResponseBean);
-//    
-// //   doNothing().when(requestValidator).validateGetRequest(getRequest);
-//    
-//    mockMvc.perform(MockMvcRequestBuilders.get("/bt-consumer/v2/wifi-eligibility")
-//      .header("APIGW-Tracking-Header", apigwTrackingHeader)
-//      .header("X-Profile-Guid", xProfileGuid)
-//      .header("X-Consumer-DigitalId-Ref", xConsumerDigitalIdRef)
-//      .contentType(MediaType.APPLICATION_JSON))
-//      .andExpect(MockMvcResultMatchers.status().isOk())
-//      .andReturn();
-//  }
+	@Mock
+	private RequestValidator requestValidator;
 
+	@Mock
+	private GetClientProfileServiceImpl getclientprofileservice;
+
+	@InjectMocks
+	private BtWifiController btWifiController;
+
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+	}
+
+	@Test
+	public void testGetCustomerOtp() {
+		
+		String apigwTrackingHeader = "96bb97fa-b941-46bb-8c4e-86c616c28a13";
+		String xProfileGuid = "0ab297cc-b2b6-1033-9f36-9a1c1857c201";
+		String xConsumerDigitalIdRef = "0ab7cc-b2b6-1033-9f36-9a1c1857c271";
+
+		GetRequest getRequest = new GetRequest();
+		getRequest.setTrackingHeader(apigwTrackingHeader);
+		getRequest.setUuid(xProfileGuid);
+		getRequest.setConsumeridref(xConsumerDigitalIdRef);
+
+		BtWifiEligibilityResponse mockedResponseData = new BtWifiEligibilityResponse(
+				"1a4cc470-4c89-103b-99a0-a5b85ba73e01", "SOME_VALUE");
+		ResponseBean<BtWifiEligibilityResponse> mockResponse = new ResponseBean<>(mockedResponseData);
+
+		when(getclientprofileservice.getclientprofile(Mockito.any(GetRequest.class))).thenReturn(mockResponse);
+
+		ResponseEntity<BtWifiEligibilityResponse> responseEntity = btWifiController.getCustomerOtp(apigwTrackingHeader,
+				xProfileGuid, xConsumerDigitalIdRef);
+
+
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(mockedResponseData, responseEntity.getBody());
+	}
 }
-
-
-
-

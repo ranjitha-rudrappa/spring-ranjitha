@@ -1,5 +1,7 @@
 package com.bt.ms.im.repository;
 
-public class SampleTestClass {
+public class RepoTest {
+
+
 
 }

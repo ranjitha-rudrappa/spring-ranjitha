@@ -29,12 +29,12 @@ public class BtWifiController {
 	
 	@Autowired
 	RequestValidator requestValidator;
-
-	@Autowired
+    @Autowired
 	GetClientProfileServiceImpl getclientprofileservice;
 
 	@Autowired
 	AppConstants appConstants;
+	
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BtWifiController.class);
 	
 
@@ -50,6 +50,7 @@ public class BtWifiController {
 		getrequest.setTrackingHeader(apigwTrackingHeader);
 		getrequest.setUuid(xProfileGuid);
 		getrequest.setConsumeridref(xConsumerDigitalIdRef);
+	
 		
 		logger.info("Sending for Request validation");
 		requestValidator.validateGetRequest(getrequest);
@@ -59,41 +60,7 @@ public class BtWifiController {
 	return new ResponseEntity<>(response.getData(), HttpStatus.OK);
 	}
 }
-//		if (response.isSuccess()) {
-//			return new ResponseEntity<>(response.getData(), HttpStatus.OK);
-//		}
-//
-//		else {
-//			BaseResponse errorres = new BaseResponse();
-//			errorres.setCode(response.getCode());
-//			errorres.setMessage(response.getMessage());
-//			errorres.setRootException(response.getRootExceptions());
-//			HttpStatus status = setErrorCode(response);
-//
-//			return new ResponseEntity(errorres, status);
-//		}
-//	}
-//
-//
-//	private HttpStatus setErrorCode(ResponseBean<BtWifiEligibilityResponse> response) {
-//	    String errorCode = response.getCode();
-//
-//	    switch (errorCode) {
-//	        case YourErrorCodeConstants.BAD_REQUEST_CODE:
-//	            return HttpStatus.BAD_REQUEST;
-//
-//	        // Add more cases for other error codes as needed
-//
-//	        default:
-//	            return HttpStatus.INTERNAL_SERVER_ERROR;
-//	    }
-//	}
-//
-//	public class YourErrorCodeConstants {
-//	    public static final String BAD_REQUEST_CODE = "400" ;
-//	    public static final int INTERNAL_SERVER_ERROR_CODE = 500;
-//	    // Add more error codes as needed
-//	}
+
 
 
 		

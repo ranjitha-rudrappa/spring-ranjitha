@@ -15,7 +15,16 @@ public class GetClientProfileV1Res {
 
     // Constructors, getters, and setters
 
-    public List<Client> getClients() {
+    public GetClientProfileV1Res() {
+		// TODO Auto-generated constructor stub
+    	
+	}
+    public GetClientProfileV1Res(String mockdata) {
+		// TODO Auto-generated constructor stub
+    	
+	}
+
+	public List<Client> getClients() {
         return clients;
     }
 

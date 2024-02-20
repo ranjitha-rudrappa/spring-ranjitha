@@ -13,7 +13,10 @@ import com.bt.ms.im.util.LoggingRequestInterceptor;
  */
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
-  @Autowired LoggingRequestInterceptor loggingInterceptor;
+  
+	
+  @Autowired
+  LoggingRequestInterceptor loggingInterceptor;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {

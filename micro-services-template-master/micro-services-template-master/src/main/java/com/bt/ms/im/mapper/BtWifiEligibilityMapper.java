@@ -15,7 +15,7 @@ public class BtWifiEligibilityMapper {
         String csfid = null;
         boolean uuidConditionMet = false; 
 
-        // Iterate through clientServiceInstances to find the first matching instance
+      
         for (ClientServiceInstanceV1 clientServiceInstance : response.getClientServiceInstances()) {
             if (!uuidConditionMet && isUuidMappingConditionMet(clientServiceInstance)) {
                 uuid = clientServiceInstance.getKey();
@@ -25,7 +25,7 @@ public class BtWifiEligibilityMapper {
                 csfid = clientServiceInstance.getCharacteristics().getValue();
             }
 
-            // Break the loop if both UUID and CFSID are found
+           
             if (uuid != null && csfid != null) {
             	 break;
             }
