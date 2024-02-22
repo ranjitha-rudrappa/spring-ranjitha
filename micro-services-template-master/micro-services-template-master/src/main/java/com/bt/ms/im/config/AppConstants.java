@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
  *
  */
 @Configuration
-//@PropertySource("classpath:constants.properties")
-//@PropertySource(value = "file:./config/constants.properties", ignoreResourceNotFound=true)
+@PropertySource("classpath:constants.properties")
+@PropertySource(value = "file:./config/constants.properties", ignoreResourceNotFound=true)
 @ConfigurationProperties(prefix = "app")
 @Component
 public class AppConstants {

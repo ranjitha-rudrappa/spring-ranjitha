@@ -25,8 +25,8 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @Component
 public class LoggingFilter implements Filter {
 	
-	@Value("${spring.service.start.url:/ms/}")
-	private String startUrl;
+//	@Value("${spring.service.start.url:/ms/}")
+//	private String startUrl;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoggingFilter.class);
 
@@ -41,7 +41,7 @@ public class LoggingFilter implements Filter {
 
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		String uri = request.getRequestURI();
-		if (uri.contains(startUrl)) {
+		if (uri.contains("/bt-consumer/v2/wifi-eligibility/")) {
 
 			HttpServletResponse response = (HttpServletResponse) servletResponse;
 			HttpServletRequest requestWrapper = new ResettableRequestServletWrapper(request);

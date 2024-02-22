@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
+ 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +16,18 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StreamUtils;
-
+ 
 import com.bt.ms.im.bptm.BptmContextHolder;
 import com.bt.util.logging.E2ETransaction;
-import com.bt.ms.im.util.LogUtil;
-
+ 
 /**
- * used for logging the downstream call using restTemplate
- *@author Suman Mandal
- *
- */
+* used for logging the downstream call using restTemplate
+*@author Suman Mandal
+*
+*/
 @Component
 public class RestClientLoggingInterceptor implements ClientHttpRequestInterceptor {
-
+ 
 	@Autowired
 	LogUtil logUtil;
 	
@@ -39,7 +38,7 @@ public class RestClientLoggingInterceptor implements ClientHttpRequestIntercepto
 	private String e2eDataFrom;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-
+ 
   @Override
   public ClientHttpResponse intercept(
       HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
@@ -48,7 +47,7 @@ public class RestClientLoggingInterceptor implements ClientHttpRequestIntercepto
     logResponse(response);
     return response;
   }
-
+ 
 	private void logRequest(HttpRequest request, byte[] body) {
 		request.getHeaders().set(e2eDataHeader, BptmContextHolder.getE2ETxn().toString());
 		request.getHeaders().set(AppConstantsUtil.E2EDATA_FROM, e2eDataFrom);
@@ -64,7 +63,7 @@ public class RestClientLoggingInterceptor implements ClientHttpRequestIntercepto
 		}
 		log.info(finalLog);
 	}
-
+ 
   private void logResponse(ClientHttpResponse response) throws IOException {
     StringBuilder sb = new StringBuilder();
     sb.append("2983 Response :").append(response.getStatusCode());
@@ -77,8 +76,8 @@ public class RestClientLoggingInterceptor implements ClientHttpRequestIntercepto
     E2ETransaction e2eTxn  =  BptmContextHolder.getE2ETxn();
     if( e2eTxn != null ) {      	
     	e2eTxn.logMessage("2983", finalLog);
-
-    	String e2eNewData = BptmContextHolder.getE2ETxn().toString() ; 
+ 
+    	String e2eNewData = BptmContextHolder.getE2ETxn().toString() ;
     	List<String> headervalueList = response.getHeaders().get(e2eDataHeader);
     	if(!CollectionUtils.isEmpty(headervalueList)) {
     		e2eNewData = headervalueList.get(0);

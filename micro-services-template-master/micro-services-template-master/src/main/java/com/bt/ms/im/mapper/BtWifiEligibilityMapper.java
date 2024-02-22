@@ -16,7 +16,7 @@ public class BtWifiEligibilityMapper {
         boolean uuidConditionMet = false; 
 
       
-        for (ClientServiceInstanceV1 clientServiceInstance : response.getClientServiceInstances()) {
+        for (ClientServiceInstanceV1 clientServiceInstance : response.getData().getClientServiceInstances()) {
             if (!uuidConditionMet && isUuidMappingConditionMet(clientServiceInstance)) {
                 uuid = clientServiceInstance.getKey();
                 uuidConditionMet = true;
@@ -36,11 +36,6 @@ public class BtWifiEligibilityMapper {
        
     }
 
-//    private boolean isUuidMappingConditionMet(ClientServiceInstanceV1 clientServiceInstance) {
-//    	return "ACTIVE".equals(clientServiceInstance.getStatus()) &&
-//                ("BTWIFI:DEFAULT".equals(clientServiceInstance.getServiceCode()) ||
-//                        "BTROPENZONE".equals(clientServiceInstance.getServiceCode()));
-//    }
 
     		
     private boolean isUuidMappingConditionMet(ClientServiceInstanceV1 clientServiceInstance) {

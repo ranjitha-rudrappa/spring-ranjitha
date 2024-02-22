@@ -35,33 +35,48 @@ class BtWifiMapperTest {
 	}
 
 
-    @Test
-    void mapValues_Success() {
-      
-        List<ClientServiceInstanceV1> clientServiceInstances = new ArrayList<>();
-        clientServiceInstances.add(createClientServiceInstance("BTWIFI:DEFAULT", "1a4cc470-4c89-103b-99a0-a5b85ba73e01", "ACTIVE", "CFSID", "SOME_VALUE"));
+	@Test
+	void mapValues_Success() {
+	    List<ClientServiceInstanceV1> clientServiceInstances = new ArrayList<>();
+	    clientServiceInstances.add(createClientServiceInstance("BTWIFI:DEFAULT", "1a4cc470-4c89-103b-99a0-a5b85ba73e01", "ACTIVE", "CFSID", "SOME_VALUE"));
+	    clientServiceInstances.add(createClientServiceInstance("CONTENTFILTERING:DEFAULT", "1a4cc470-4c89-103b-99a0-a5b85ba73e01", "ACTIVE", "CFSID", "SOME_VALUE")); 
 
-        clientServiceInstances.add(createClientServiceInstance("CONTENTFILTERING:DEFAULT", "1a4cc470-4c89-103b-99a0-a5b85ba73e01", "ACTIVE", "CFSID", "SOME_VALUE")); 
-        when(response.getClientServiceInstances()).thenReturn(clientServiceInstances);
+	    
+	    GetClientProfileV1Res.Data data = new GetClientProfileV1Res.Data();
+	    data.setClientServiceInstances(clientServiceInstances);
 
-      
-        BtWifiEligibilityResponse result = btWifiEligibilityMapper.mapValues(response);
+	  
+	    when(response.getData()).thenReturn(data);
 
-        
-        assertEquals("1a4cc470-4c89-103b-99a0-a5b85ba73e01", result.getUuid());
-        assertEquals("SOME_VALUE", result.getCsfid());
-    }
+	   
+	    BtWifiEligibilityResponse result = btWifiEligibilityMapper.mapValues(response);
 
-    @Test
-    void mapValues_ForbiddenException() {
-        
-        List<ClientServiceInstanceV1> clientServiceInstances = new ArrayList<>();
-        clientServiceInstances.add(createClientServiceInstance("BTWIFI:DEFAULT", "other-key", "INACTIVE", "CFSID", "SOME_VALUE"));
-        when(response.getClientServiceInstances()).thenReturn(clientServiceInstances);
+	   
+	    assertEquals("1a4cc470-4c89-103b-99a0-a5b85ba73e01", result.getUuid());
+	    assertEquals("SOME_VALUE", result.getCsfid());
+	}
 
-        
-        assertThrows(ForbiddenException.class, () -> btWifiEligibilityMapper.mapValues(response));
-    }
+
+	@Test
+	void mapValues_ForbiddenException() {
+	    
+	    ClientServiceInstanceV1 forbiddenInstance = createClientServiceInstance("BTWIFI:DEFAULT", "other-key", "INACTIVE", "CFSID", "SOME_VALUE");
+
+	    List<ClientServiceInstanceV1> clientServiceInstances = new ArrayList<>();
+	    clientServiceInstances.add(forbiddenInstance);
+
+	    
+	    GetClientProfileV1Res.Data data = new GetClientProfileV1Res.Data();
+	    data.setClientServiceInstances(clientServiceInstances);
+
+	  
+	    when(response.getData()).thenReturn(data);
+
+	    
+	    assertThrows(ForbiddenException.class, () -> btWifiEligibilityMapper.mapValues(response));
+	}
+
+
 
     private ClientServiceInstanceV1 createClientServiceInstance(String serviceCode, String key, String status, String characteristicName, String characteristicValue) {
         ClientServiceInstanceV1 clientServiceInstance = new ClientServiceInstanceV1();

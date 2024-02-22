@@ -57,9 +57,38 @@ public class BtWifiController {
 		
 		logger.info("Sending to service layer");
 		ResponseBean<BtWifiEligibilityResponse> response = getclientprofileservice.getclientprofile(getrequest);
-	return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+		
+		if(response.isSuccess()) {
+    	return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+		}
+		else {
+			BaseResponse errorres = new BaseResponse();
+			errorres.setCode(response.getCode());
+			errorres.setMessage(response.getMessage());
+			errorres.setRootException(response.getRootExceptions());
+			HttpStatus status = setErrorCode(response);
+
+			return new ResponseEntity(errorres, status);
+		}
 	}
-}
+
+	private HttpStatus setErrorCode(ResponseBean<BtWifiEligibilityResponse> response) {
+		HttpStatus status = null;
+
+		if (response.getCode().equals(this.appConstants.getErrorRes().getClientErrorCode())) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		} else if (response.getCode().equals(this.appConstants.getErrorRes().getClientUnavErrorCode())) {
+			status = HttpStatus.SERVICE_UNAVAILABLE;
+		} else if (response.getCode().equals(this.appConstants.getErrorRes().getValidationfailedErrorCode())) {
+			status = HttpStatus.BAD_REQUEST;
+		} else if (response.getCode().equals(this.appConstants.getErrorRes().getClientUnavErrorCode())) {
+			status = HttpStatus.NOT_FOUND;
+		} else {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return status;
+	}
+	}
 
 
 

@@ -29,6 +29,7 @@ public class RequestValidator {
 	public ResponseEntity<BadRequestResponse> validateGetRequest(GetRequest request) {
 	    String trackingid = request.getTrackingHeader();
 	    String uuid = request.getUuid();
+	    String consumerId=request.getConsumeridref();
 	    
 	    log.info("Validating the request");
 
@@ -37,28 +38,30 @@ public class RequestValidator {
 		        StandardError errormsg = StandardError.ERR400_25;
 		        log.error(errormsg.getMessage());
 		        throw new BadRequestException(errormsg);
-	    } else {
+	    }
+	    	else {
+	    }
 	        String regexTracking = TACKINGREGEX;
 	        Pattern patternTracking = Pattern.compile(regexTracking);
 	        Matcher matcherTracking = patternTracking.matcher(trackingid);
 	        boolean trackingValid = matcherTracking.matches();
 	        log.info("Is Tracking ID valid? {}", trackingValid);
+	       
 
 	        if (!trackingValid) {
 	        	
 	        	 StandardError errormsg = StandardError.ERR400_26;
 			        log.error(errormsg.getMessage());
 			        throw new BadRequestException(errormsg);
-			        
-//	            BadRequestResponse badRequestResponse = new BadRequestResponse();
-//	            badRequestResponse.setErrorCode(400);
-//	            badRequestResponse.setErrorMessage("Invalid tracking ID");
-//
-//	            // Throw an exception with the BadRequestResponse
-//	            throw new BadRequestException("26","Invalid tracking ID" );
 	           
 	        }
-	    }
+	        
+	        
+	        if(uuid==null && consumerId==null) {       	
+	        	 StandardError errormsg = StandardError.ERR400_25;
+			        log.error(errormsg.getMessage());
+			        throw new BadRequestException(errormsg);
+	        }
 
 	    if (uuid != null) {
 	        String regexUuid = UUIDREGEX;
@@ -72,13 +75,6 @@ public class RequestValidator {
 	        	  StandardError errormsg = StandardError.ERR400_26;
 			        log.error(errormsg.getMessage());
 			        throw new BadRequestException(errormsg);
-			        
-//	            BadRequestResponse badRequestResponse = new BadRequestResponse();
-//	            badRequestResponse.setErrorCode(400);
-//	            badRequestResponse.setErrorMessage("Invalid UUID");
-//
-//	            // Throw an exception with the BadRequestResponse
-//	            throw new BadRequestException("26","Invalid  UUID" );
 	        	
 	        }
 	    }
